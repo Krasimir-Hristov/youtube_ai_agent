@@ -2,6 +2,7 @@
 
 import os
 from openai import OpenAI
+from openai.types.chat import ChatCompletionMessageParam
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -18,7 +19,7 @@ TEMPERATURE = 0.7
 SYSTEM_PROMPT = "Ти си полезен ИИ асистент. Отговаряй само на български, освен ако потребителят не поиска друго."
 MAX_HISTORY = 10
 
-conversation_history = []
+conversation_history: list[ChatCompletionMessageParam] = []
 
 
 def ask(user_message: str) -> None:
@@ -30,12 +31,13 @@ def ask(user_message: str) -> None:
     )
 
     try:
+        messages: list[ChatCompletionMessageParam] = [
+            {"role": "system", "content": SYSTEM_PROMPT},
+            *conversation_history,
+        ]
         response = client.chat.completions.create(
             model=MODEL,
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-            ]
-            + conversation_history,
+            messages=messages,
             max_tokens=MAX_TOKENS,
             temperature=TEMPERATURE,
             stream=True,
