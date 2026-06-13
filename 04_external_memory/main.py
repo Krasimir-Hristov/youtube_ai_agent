@@ -45,7 +45,7 @@ def save_history() -> None:
         with open(HISTORY_FILE, "w", encoding="utf-8") as f:
             json.dump(list(conversation_history), f, ensure_ascii=False, indent=2)
     except Exception as e:
-        print("Cannot save the history: {e}")
+        print(f"Cannot save the history: {e}")
 
 
 def ask(user_message: str) -> None:
