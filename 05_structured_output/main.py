@@ -50,7 +50,7 @@ No prose. No explanation. No markdown. Raw JSON only."""
 class MovieInfo(TypedDict):
     title: str
     year: int
-    ganre: list[str]
+    genre: list[str]
     director: str
     rating: float
     summary: str
